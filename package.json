@@ -1,0 +1,37 @@
+{
+    "name": "task-tracker-cli",
+    "version": "1.0.0",
+    "description": "A single-file, zero-dependency CLI task manager built with Node.js",
+    "main": "task-cli.js",
+    "bin": {
+        "task-cli": "./task-cli.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zeyadsleem/task-cli.git"
+    },
+    "keywords": [
+        "cli",
+        "task-tracker",
+        "todo",
+        "productivity",
+        "nodejs",
+        "filesystem"
+    ],
+    "author": "Zeyad Sleem <zeyadsleem1@gmail.com>",
+    "license": "MIT",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/zeyadsleem/task-cli/issues"
+    },
+    "homepage": "https://github.com/zeyadsleem/task-cli#readme",
+    "scripts": {
+        "start": "node task-cli.js",
+        "test": "node --test",
+        "link": "npm link",
+        "unlink": "npm unlink -g task-tracker-cli"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
