@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "description": "Buy a milk",
+    "status": "todo",
+    "createdAt": "2025-11-06T17:19:01.173Z",
+    "updatedAt": "2025-11-06T17:19:01.174Z"
+  },
+  {
+    "id": 3,
+    "description": "Buy a milk 3",
+    "status": "done",
+    "createdAt": "2025-11-06T17:19:05.837Z",
+    "updatedAt": "2025-11-07T09:54:47.118Z"
+  },
+  {
+    "id": 4,
+    "description": "Buy a milk 4",
+    "status": "todo",
+    "createdAt": "2025-11-06T17:19:09.439Z",
+    "updatedAt": "2025-11-06T17:19:09.439Z"
+  },
+  {
+    "id": 4,
+    "description": "Buy a milk 2",
+    "status": "todo",
+    "createdAt": "2025-11-06T17:39:09.420Z",
+    "updatedAt": "2025-11-06T17:39:09.420Z"
+  }
+]
