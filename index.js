@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { version } = require("./package.json");
+const fs = require('fs');
+const path = require('path');
+const { version } = require('./package.json');
 
-const FILE = path.join(process.cwd(), "tasks.json");
+const FILE = path.join(process.cwd(), 'tasks.json');
 
 function printHelp() {
     console.log(`
@@ -33,10 +33,10 @@ function loadTasks() {
             saveTasks([]);
             return [];
         }
-        const data = fs.readFileSync(FILE, "utf-8");
+        const data = fs.readFileSync(FILE, 'utf-8');
         return JSON.parse(data);
     } catch (err) {
-        console.error("Failed to read tasks.json. Starting with empty list.");
+        console.error('Failed to read tasks.json. Starting with empty list.');
         return [];
     }
 }
@@ -45,7 +45,7 @@ function saveTasks(tasks) {
     try {
         fs.writeFileSync(FILE, JSON.stringify(tasks, null, 2));
     } catch (err) {
-        console.error("Failed to save tasks:", err.message);
+        console.error('Failed to save tasks:', err.message);
     }
 }
 
@@ -63,14 +63,14 @@ function exitWithError(msg) {
 }
 
 function addTask(args) {
-    const description = args.slice(1).join(" ").trim();
-    if (!description) exitWithError("task description is required");
+    const description = args.slice(1).join(' ').trim();
+    if (!description) exitWithError('task description is required');
 
     const tasks = loadTasks();
     const newTask = {
         id: generateId(tasks),
         description,
-        status: "todo",
+        status: 'todo',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
     };
@@ -82,20 +82,17 @@ function addTask(args) {
 
 function listTasks(args) {
     const filter = args[1];
-    const isJson = args.includes("--json");
+    const isJson = args.includes('--json');
     const tasks = loadTasks();
     let filtered = tasks;
 
-    if (filter === "done") filtered = tasks.filter((t) => t.status === "done");
-    else if (filter === "todo")
-        filtered = tasks.filter((t) => t.status === "todo");
-    else if (filter === "in-progress")
-        filtered = tasks.filter((t) => t.status === "in-progress");
-    else if (filter && !isJson)
-        exitWithError("invalid filter. Use: done, todo, in-progress");
+    if (filter === 'done') filtered = tasks.filter((t) => t.status === 'done');
+    else if (filter === 'todo') filtered = tasks.filter((t) => t.status === 'todo');
+    else if (filter === 'in-progress') filtered = tasks.filter((t) => t.status === 'in-progress');
+    else if (filter && !isJson) exitWithError('invalid filter. Use: done, todo, in-progress');
 
     if (filtered.length === 0) {
-        console.log(isJson ? "[]" : "No tasks found");
+        console.log(isJson ? '[]' : 'No tasks found');
         return;
     }
 
@@ -110,7 +107,7 @@ function listTasks(args) {
 
 function deleteTask(args) {
     const id = parseInt(args[1]);
-    if (isNaN(id)) exitWithError("usage: delete <id>");
+    if (isNaN(id)) exitWithError('usage: delete <id>');
 
     const tasks = loadTasks();
     const index = tasks.findIndex((t) => t.id === id);
@@ -123,9 +120,8 @@ function deleteTask(args) {
 
 function updateTask(args) {
     const id = parseInt(args[1]);
-    const newDesc = args.slice(2).join(" ").trim();
-    if (isNaN(id) || !newDesc)
-        exitWithError("usage: update <id> <new description>");
+    const newDesc = args.slice(2).join(' ').trim();
+    if (isNaN(id) || !newDesc) exitWithError('usage: update <id> <new description>');
 
     const tasks = loadTasks();
     const task = getTask(tasks, id);
@@ -145,7 +141,7 @@ function changeTaskStatus(args, command) {
     const task = getTask(tasks, id);
     if (!task) exitWithError(`task with ID ${id} not found`);
 
-    task.status = command === "mark-done" ? "done" : "in-progress";
+    task.status = command === 'mark-done' ? 'done' : 'in-progress';
     task.updatedAt = new Date().toISOString();
     saveTasks(tasks);
     console.log(`Task ${id} is now ${task.status}`);
@@ -153,12 +149,12 @@ function changeTaskStatus(args, command) {
 
 function clearDoneTasks() {
     const tasks = loadTasks();
-    const doneCount = tasks.filter((t) => t.status === "done").length;
+    const doneCount = tasks.filter((t) => t.status === 'done').length;
     if (doneCount === 0) {
-        console.log("No done tasks to clear.");
+        console.log('No done tasks to clear.');
         return;
     }
-    const remaining = tasks.filter((t) => t.status !== "done");
+    const remaining = tasks.filter((t) => t.status !== 'done');
     saveTasks(remaining);
     console.log(`Cleared ${doneCount} done task(s).`);
 }
@@ -173,29 +169,29 @@ function main() {
     const command = args[0];
 
     switch (command) {
-        case "add":
+        case 'add':
             addTask(args);
             break;
-        case "list":
+        case 'list':
             listTasks(args);
             break;
-        case "delete":
+        case 'delete':
             deleteTask(args);
             break;
-        case "update":
+        case 'update':
             updateTask(args);
             break;
-        case "mark-in-progress":
-        case "mark-done":
+        case 'mark-in-progress':
+        case 'mark-done':
             changeTaskStatus(args, command);
             break;
-        case "clear-done":
+        case 'clear-done':
             clearDoneTasks();
             break;
-        case "help":
+        case 'help':
             printHelp();
             break;
-        case "version":
+        case 'version':
             console.log(`v${version}`);
             break;
         default:
